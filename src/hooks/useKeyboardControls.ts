@@ -1,13 +1,14 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 
+import type { Orientation } from '../shared';
+import { useSpecificationsWrapper } from '../model/specifications';
+
 import { useScreenParams } from './useScreenParams.ts';
 
 type Position = {
   x: number;
   y: number;
 };
-
-type Orientation = 'left' | 'right';
 
 const keysCode = ['KeyW', 'KeyS', 'KeyA', 'KeyD'];
 
@@ -20,6 +21,7 @@ export const useKeyboardControls = () => {
     moveStep,
     initialPosition,
   } = useScreenParams();
+  const speed = useSpecificationsWrapper('speed');
 
   const [fieldPosition, setFieldPosition] = useState<Position>(initialPosition);
   const [orientation, setOrientation] = useState<Orientation>('left');
@@ -34,15 +36,15 @@ export const useKeyboardControls = () => {
       let newX = prev.x;
       let newY = prev.y;
 
-      if (pressedKeys.KeyS) newY = prev.y - moveStep;
-      if (pressedKeys.KeyW) newY = prev.y + moveStep;
+      if (pressedKeys.KeyS) newY = prev.y - moveStep - (speed / 2);
+      if (pressedKeys.KeyW) newY = prev.y + moveStep + (speed / 2);
       if (pressedKeys.KeyD) {
         setOrientation('right');
-        newX = prev.x - moveStep;
+        newX = prev.x - moveStep - (speed / 2);
       }
       if (pressedKeys.KeyA) {
         setOrientation('left');
-        newX = prev.x + moveStep;
+        newX = prev.x + moveStep + (speed / 2);
       }
 
       newX = Math.max(minX, Math.min(maxX, newX));
@@ -55,7 +57,7 @@ export const useKeyboardControls = () => {
 
     // eslint-disable-next-line react-hooks/immutability
     if (hasPressedKeys) rafRef.current = requestAnimationFrame(updatePosition);
-  }, [moveStep, minX, maxX, minY, maxY]);
+  }, [moveStep, speed, minX, maxX, minY, maxY]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

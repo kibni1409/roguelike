@@ -1,7 +1,6 @@
 import { Flex } from 'antd';
 
 import { Field } from '../Field';
-import { Rules } from '../Rules';
 import { Player } from '../Player';
 import { useScreenParams } from '../../hooks';
 
@@ -15,11 +14,10 @@ export const Container = () => {
       align="center"
       justify="center"
       className={styles.Container}
-      style={{ width: screenWidth, height: screenHeight }}
+      style={{ flexShrink: 0, width: screenWidth, height: screenHeight }}
     >
       <Field />
       <Player />
-      <Rules />
     </Flex>
   );
 };

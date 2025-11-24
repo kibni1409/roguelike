@@ -1,7 +1,7 @@
 export const useScreenParams = () => {
   const fieldWidth = 2000;
   const fieldHeight = 2000;
-  const moveStep = 5;
+  const moveStep = 1;
   const screenWidth = 900;
   const screenHeight = 800;
   const initialPosition = { x: -100, y: -100 };

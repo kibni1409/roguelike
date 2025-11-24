@@ -1,0 +1,16 @@
+.button {
+  width: 30px;
+  height: 32px;
+  background-size: cover;
+  border: none;
+  outline: none;
+
+  &Plus {
+    background-image: url('src/assets/buttons/plus.png');
+
+    &:hover {
+      background-image: url('src/assets/buttons/plusHover.png');
+
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { Flex } from 'antd';
 
 import { Border } from '../Border';
+import { Plants } from '../Plants';
 import { Enemies } from '../Enemies';
 import { useScreenParams, useKeyboardControls } from '../../hooks';
 
@@ -21,6 +22,7 @@ export const Field = () => {
     >
       <Enemies />
       <Border />
+      <Plants />
       <div
         className={styles.obstacle}
         style={{ top: 400, left: 500 }}
