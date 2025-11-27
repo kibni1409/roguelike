@@ -7,21 +7,26 @@ type MiddleZProps = {
 
 export const MiddleZ = ({ enemy }: MiddleZProps) => {
   const currentGif = giftsMiddleZ[enemy.orientation]['run'];
-  const size = 80;
+
   return (
     <div
       style={{
         top: enemy.y,
         left: enemy.x,
-        fontSize: size,
         zIndex: enemy.zIndex,
         position: 'absolute',
       }}
     >
       <img
         src={currentGif}
+        draggable="false"
         alt={`${enemy.orientation} run gif`}
-        style={{ width: size, height: size }}
+        style={{
+          width: enemy.width,
+          userSelect: 'none',
+          height: enemy.height,
+          WebkitUserSelect: 'none',
+        }}
       />
     </div>
   );

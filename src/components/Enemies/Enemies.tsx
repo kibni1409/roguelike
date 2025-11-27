@@ -7,18 +7,24 @@ import { MiddleZ } from './MiddleZ';
 export const Enemies = () => {
   const { enemies } = useEnemies();
 
+  const enemyComponents = {
+    bigZ: BigZ,
+    littleZ: LittleZ,
+    middleZ: MiddleZ,
+  };
+
   return (
     <>
       {enemies.map((enemy) => {
-        if (enemy.type === 'littleZ') {
-          return (<LittleZ enemy={enemy} />);
-        }
-        if (enemy.type === 'middleZ') {
-          return (<MiddleZ enemy={enemy} />);
-        }
-        if (enemy.type === 'bigZ') {
-          return (<BigZ enemy={enemy} />);
-        }
+        const Component = enemyComponents[enemy.type];
+        return Component
+          ? (
+            <Component
+              enemy={enemy}
+              key={enemy.id}
+            />
+          )
+          : null;
       })}
     </>
   );

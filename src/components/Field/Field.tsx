@@ -3,12 +3,13 @@ import { Flex } from 'antd';
 import { Border } from '../Border';
 import { Plants } from '../Plants';
 import { Enemies } from '../Enemies';
+import { Bullets } from '../Bullets';
 import { useScreenParams, useKeyboardControls } from '../../hooks';
 
 import styles from './Field.module.scss';
 
 export const Field = () => {
-  const { fieldPosition } = useKeyboardControls();
+  const { position } = useKeyboardControls();
   const { fieldWidth, fieldHeight } = useScreenParams();
 
   return (
@@ -17,24 +18,13 @@ export const Field = () => {
       style={{
         width: fieldWidth,
         height: fieldHeight,
-        transform: `translate(${fieldPosition.x}px, ${fieldPosition.y}px)`,
+        transform: `translate(${position.x}px, ${position.y}px)`,
       }}
     >
       <Enemies />
       <Border />
       <Plants />
-      <div
-        className={styles.obstacle}
-        style={{ top: 400, left: 500 }}
-      >
-        🏠
-      </div>
-      <div
-        className={styles.obstacle}
-        style={{ top: 600, left: 700 }}
-      >
-        💰
-      </div>
+      <Bullets />
     </Flex>
   );
 };

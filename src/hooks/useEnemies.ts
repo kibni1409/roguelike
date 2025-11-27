@@ -1,20 +1,23 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
-import { type Enemy, type EnemyType, generateEnemies } from '../shared';
+import { EnemyType } from '../shared';
+import { useEnemiesWrapper } from '../model/enemy';
 
 import { useScreenParams } from './useScreenParams';
 import { useKeyboardControls } from './useKeyboardControls';
 
 export const useEnemies = () => {
-  const { fieldPosition } = useKeyboardControls();
+  const { position } = useKeyboardControls();
   const { screenWidth, screenHeight } = useScreenParams();
-  const [enemies, setEnemies] = useState<Enemy[]>(generateEnemies(10));
+  const enemies = useEnemiesWrapper('enemies');
+  const setEnemies = useEnemiesWrapper('setEnemies');
+
   const rafRef = useRef<null | number>(null);
 
   const moveEnemies = useCallback(() => {
     // Вычисляем абсолютную позицию персонажа на поле (центр экрана относительно поля)
-    const playerX = screenWidth / 2 - fieldPosition.x;
-    const playerY = screenHeight / 2 - fieldPosition.y;
+    const playerX = screenWidth / 2 - position.x;
+    const playerY = screenHeight / 2 - position.y;
 
     setEnemies((prevEnemies) => {
       // Сначала обновляем позиции и orientation
@@ -56,7 +59,7 @@ export const useEnemies = () => {
 
     // eslint-disable-next-line react-hooks/immutability
     rafRef.current = requestAnimationFrame(moveEnemies);
-  }, [fieldPosition, screenWidth, screenHeight]);
+  }, [screenWidth, position.x, position.y, screenHeight, setEnemies]);
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(moveEnemies);

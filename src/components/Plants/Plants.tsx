@@ -9,6 +9,7 @@ export const Plants = () => {
       {grass.map(g => (
         <Grass
           id={g.id}
+          key={g.id}
           top={g.top}
           left={g.left}
         />

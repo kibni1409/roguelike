@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 
-import type { Orientation } from '../shared';
+import { usePlayerStoreWrapper } from '../model/player';
 import { useSpecificationsWrapper } from '../model/specifications';
 
 import { useScreenParams } from './useScreenParams.ts';
@@ -22,10 +22,9 @@ export const useKeyboardControls = () => {
     initialPosition,
   } = useScreenParams();
   const speed = useSpecificationsWrapper('speed');
-
+  const { isStep, orientation } = usePlayerStoreWrapper('player');
+  const setPlayer = usePlayerStoreWrapper('setPlayer');
   const [fieldPosition, setFieldPosition] = useState<Position>(initialPosition);
-  const [orientation, setOrientation] = useState<Orientation>('left');
-  const [isStep, setIsStep] = useState<boolean>(false);
 
   const pressedKeysRef = useRef<Record<string, boolean>>({});
   const rafRef = useRef<null | number>(null);
@@ -39,11 +38,11 @@ export const useKeyboardControls = () => {
       if (pressedKeys.KeyS) newY = prev.y - moveStep - (speed / 2);
       if (pressedKeys.KeyW) newY = prev.y + moveStep + (speed / 2);
       if (pressedKeys.KeyD) {
-        setOrientation('right');
+        setPlayer({ orientation: 'right' });
         newX = prev.x - moveStep - (speed / 2);
       }
       if (pressedKeys.KeyA) {
-        setOrientation('left');
+        setPlayer({ orientation: 'left' });
         newX = prev.x + moveStep + (speed / 2);
       }
 
@@ -57,7 +56,7 @@ export const useKeyboardControls = () => {
 
     // eslint-disable-next-line react-hooks/immutability
     if (hasPressedKeys) rafRef.current = requestAnimationFrame(updatePosition);
-  }, [moveStep, speed, minX, maxX, minY, maxY]);
+  }, [moveStep, speed, minX, maxX, minY, maxY, setPlayer]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -66,7 +65,7 @@ export const useKeyboardControls = () => {
         event.preventDefault();
         if (!pressedKeysRef.current[code]) {
           pressedKeysRef.current[code] = true;
-          setIsStep(Object.values(pressedKeysRef.current).some(Boolean));
+          setPlayer({ isStep: Object.values(pressedKeysRef.current).some(Boolean) });
           if (!rafRef.current) rafRef.current = requestAnimationFrame(updatePosition);
         }
       }
@@ -78,7 +77,7 @@ export const useKeyboardControls = () => {
         if (pressedKeysRef.current[code]) {
           pressedKeysRef.current[code] = false;
           const hasPressed = Object.values(pressedKeysRef.current).some(Boolean);
-          setIsStep(hasPressed);
+          setPlayer({ isStep: hasPressed });
           if (!hasPressed && rafRef.current) {
             cancelAnimationFrame(rafRef.current);
             rafRef.current = null;
@@ -97,5 +96,5 @@ export const useKeyboardControls = () => {
     };
   }, [updatePosition]);
 
-  return { isStep, orientation, fieldPosition };
+  return { isStep, orientation, position: fieldPosition };
 };

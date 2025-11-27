@@ -25,7 +25,14 @@ export const Grass = ({ id, top, left }: GrassProps) => {
       <img
         src={source}
         alt={'grass'}
-        style={{ zIndex: 1, width: size, height: size }}
+        draggable="false"
+        style={{
+          zIndex: 1,
+          width: size,
+          height: size,
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+        }}
       />
     </div>
   );

@@ -7,21 +7,26 @@ type LittleZProps = {
 
 export const LittleZ = ({ enemy }: LittleZProps) => {
   const currentGif = giftsLittleZ[enemy.orientation]['run'];
-  const size = 70;
+
   return (
     <div
       style={{
         top: enemy.y,
         left: enemy.x,
-        fontSize: size,
         zIndex: enemy.zIndex,
         position: 'absolute',
       }}
     >
       <img
         src={currentGif}
+        draggable="false"
         alt={`${enemy.orientation} run gif`}
-        style={{ width: size, height: size }}
+        style={{
+          width: enemy.width,
+          userSelect: 'none',
+          height: enemy.height,
+          WebkitUserSelect: 'none',
+        }}
       />
     </div>
   );
