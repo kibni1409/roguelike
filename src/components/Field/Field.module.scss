@@ -9,8 +9,12 @@
 
 .bullet {
   position: absolute;
-  background: yellow;
-  border-radius: 50%;
-  pointer-events: none; /* Чтобы не мешали кликам */
+  background: #ffe566;
+  border: 1px solid #c9a227;
+  border-radius: 0;
+  image-rendering: pixelated;
+  pointer-events: none;
   z-index: 5;
+  box-sizing: border-box;
 }
+
