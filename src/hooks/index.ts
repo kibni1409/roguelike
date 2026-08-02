@@ -1,5 +1,3 @@
 export * from './useGrass.ts';
-export * from './useEnemies.ts';
-export * from './useBullets.ts';
+export * from './useGame.ts';
 export * from './useScreenParams.ts';
-export * from './useKeyboardControls.ts';

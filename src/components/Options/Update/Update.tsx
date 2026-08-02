@@ -1,53 +1,76 @@
-import cn from 'classnames';
 import { Flex, Button } from 'antd';
 
+import { useHud } from '../../../hooks/useGame';
 import { useSpecificationsWrapper } from '../../../model/specifications';
 
 import styles from './Update.module.scss';
 
 export const Update = () => {
+  const { skillPoints } = useHud();
   const attack = useSpecificationsWrapper('attack');
   const speed = useSpecificationsWrapper('speed');
   const range = useSpecificationsWrapper('range');
-  const setAttack = useSpecificationsWrapper('setAttack');
-  const setSpeed = useSpecificationsWrapper('setSpeed');
-  const setRange = useSpecificationsWrapper('setRange');
+  const reload = useSpecificationsWrapper('reload');
+  const upgradeAttack = useSpecificationsWrapper('upgradeAttack');
+  const upgradeSpeed = useSpecificationsWrapper('upgradeSpeed');
+  const upgradeRange = useSpecificationsWrapper('upgradeRange');
+  const upgradeReload = useSpecificationsWrapper('upgradeReload');
+
+  const canUpgrade = skillPoints > 0;
 
   return (
     <Flex
       vertical
       gap={20}
       align="flex-end"
+      className={styles.panel}
     >
-      <h2>specifications</h2>
+      <h2 className={styles.title}>specifications</h2>
+      <div className={styles.points}>
+        Available points: {skillPoints}
+      </div>
       <Flex
         gap={20}
         align="center"
       >
-        {`speed: ${speed}`}
+        <span className={styles.rowLabel}>{`speed: ${speed}`}</span>
         <Button
-          onClick={() => setSpeed(speed + 1)}
-          className={cn(styles.button, styles.buttonPlus)}
+          disabled={!canUpgrade}
+          onClick={() => upgradeSpeed()}
+          className={`${styles.button} ${styles.buttonPlus}`}
         />
       </Flex>
       <Flex
         gap={20}
         align="center"
       >
-        {`attack: ${attack}`}
+        <span className={styles.rowLabel}>{`attack: ${attack}`}</span>
         <Button
-          onClick={() => setAttack(attack + 1)}
-          className={cn(styles.button, styles.buttonPlus)}
+          disabled={!canUpgrade}
+          onClick={() => upgradeAttack()}
+          className={`${styles.button} ${styles.buttonPlus}`}
         />
       </Flex>
       <Flex
         gap={20}
         align="center"
       >
-        {`range: ${range}`}
+        <span className={styles.rowLabel}>{`range: ${range}`}</span>
         <Button
-          onClick={() => setRange(range + 1)}
-          className={cn(styles.button, styles.buttonPlus)}
+          disabled={!canUpgrade}
+          onClick={() => upgradeRange()}
+          className={`${styles.button} ${styles.buttonPlus}`}
+        />
+      </Flex>
+      <Flex
+        gap={20}
+        align="center"
+      >
+        <span className={styles.rowLabel}>{`reload: ${reload}`}</span>
+        <Button
+          disabled={!canUpgrade}
+          onClick={() => upgradeReload()}
+          className={`${styles.button} ${styles.buttonPlus}`}
         />
       </Flex>
     </Flex>

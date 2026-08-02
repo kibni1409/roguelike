@@ -1,31 +1,18 @@
-import { useEnemies } from '../../hooks';
+import { useEnemyIds } from '../../hooks/useGame';
 
-import { BigZ } from './BigZ';
-import { LittleZ } from './LittleZ';
-import { MiddleZ } from './MiddleZ';
+import { EnemyEntity } from './EnemyEntity';
 
 export const Enemies = () => {
-  const { enemies } = useEnemies();
-
-  const enemyComponents = {
-    bigZ: BigZ,
-    littleZ: LittleZ,
-    middleZ: MiddleZ,
-  };
+  const enemyIds = useEnemyIds();
 
   return (
     <>
-      {enemies.map((enemy) => {
-        const Component = enemyComponents[enemy.type];
-        return Component
-          ? (
-            <Component
-              enemy={enemy}
-              key={enemy.id}
-            />
-          )
-          : null;
-      })}
+      {enemyIds.map(id => (
+        <EnemyEntity
+          id={id}
+          key={id}
+        />
+      ))}
     </>
   );
 };

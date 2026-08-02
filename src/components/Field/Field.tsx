@@ -1,30 +1,40 @@
-import { Flex } from 'antd';
+import { useRef, useEffect } from 'react';
 
 import { Border } from '../Border';
 import { Plants } from '../Plants';
 import { Enemies } from '../Enemies';
 import { Bullets } from '../Bullets';
-import { useScreenParams, useKeyboardControls } from '../../hooks';
+import {
+  world,
+  FIELD_WIDTH,
+  FIELD_HEIGHT,
+  registerFieldDom,
+} from '../../game';
 
 import styles from './Field.module.scss';
 
 export const Field = () => {
-  const { position } = useKeyboardControls();
-  const { fieldWidth, fieldHeight } = useScreenParams();
+  const fieldRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    registerFieldDom(fieldRef.current);
+    return () => registerFieldDom(null);
+  }, []);
 
   return (
-    <Flex
+    <div
+      ref={fieldRef}
       className={styles.Field}
       style={{
-        width: fieldWidth,
-        height: fieldHeight,
-        transform: `translate(${position.x}px, ${position.y}px)`,
+        width: FIELD_WIDTH,
+        height: FIELD_HEIGHT,
+        transform: `translate(${world.fieldPosition.x}px, ${world.fieldPosition.y}px)`,
       }}
     >
       <Enemies />
       <Border />
       <Plants />
       <Bullets />
-    </Flex>
+    </div>
   );
 };

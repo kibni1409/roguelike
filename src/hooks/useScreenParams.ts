@@ -1,27 +1,28 @@
+import {
+  MOVE_STEP,
+  FIELD_WIDTH,
+  FIELD_HEIGHT,
+  FIELD_MIN_X,
+  FIELD_MAX_X,
+  FIELD_MIN_Y,
+  FIELD_MAX_Y,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  INITIAL_FIELD_POSITION,
+} from '../game/config';
+
+/** @deprecated Prefer importing constants from `game/config`. */
 export const useScreenParams = () => {
-  const fieldWidth = 2000;
-  const fieldHeight = 2000;
-  const moveStep = 1;
-  const screenWidth = 900;
-  const screenHeight = 800;
-  const initialPosition = { x: -100, y: -100 };
-
-  const maxX = -20;
-  const minX = -(fieldWidth - screenWidth) - maxX;
-
-  const maxY = -20;
-  const minY = -(fieldHeight - screenHeight) - maxY;
-
   return {
-    maxY,
-    minY,
-    maxX,
-    minX,
-    moveStep,
-    fieldWidth,
-    fieldHeight,
-    screenWidth,
-    screenHeight,
-    initialPosition,
+    maxY: FIELD_MAX_Y,
+    minY: FIELD_MIN_Y,
+    maxX: FIELD_MAX_X,
+    minX: FIELD_MIN_X,
+    moveStep: MOVE_STEP,
+    fieldWidth: FIELD_WIDTH,
+    fieldHeight: FIELD_HEIGHT,
+    screenWidth: SCREEN_WIDTH,
+    screenHeight: SCREEN_HEIGHT,
+    initialPosition: INITIAL_FIELD_POSITION,
   };
 };

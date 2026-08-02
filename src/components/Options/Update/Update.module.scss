@@ -1,3 +1,24 @@
+.panel {
+  padding: 8px 16px;
+  color: #fff;
+  text-align: right;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+}
+
+.points {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffb347;
+}
+
+.rowLabel {
+  color: #fff;
+}
+
 .button {
   width: 30px;
   height: 32px;
@@ -5,12 +26,16 @@
   border: none;
   outline: none;
 
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
   &Plus {
     background-image: url('src/assets/buttons/plus.png');
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-image: url('src/assets/buttons/plusHover.png');
-
     }
   }
 }
